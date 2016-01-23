@@ -16,12 +16,14 @@ class JobDescriptionAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Volunteer)
 class VolunteerAdmin(admin.ModelAdmin):
-    pass
+    fields = ('event', 'real_name', 'email_address', 'phone_number',
+              'public_name', 'slug', 'constraints')
+    readonly_fields = ('public_name', 'slug')
 
 
 @admin.register(Job)

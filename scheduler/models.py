@@ -1,6 +1,12 @@
 from enum import Enum
+import random
 
 from django.db import models
+from django.db.models import signals
+from django.dispatch import receiver
+from django.utils.text import slugify
+
+from . import public_name_data
 
 
 class ConstraintDescription(models.Model):
@@ -35,12 +41,12 @@ class Event(models.Model):
     day_length = models.PositiveSmallIntegerField()
     day_count = models.PositiveSmallIntegerField()
 
-    volunteer_constraints = models.ForeignKey(ConstraintDescription,
-                                              related_name='volunteer_events',
-                                              on_delete=models.CASCADE)
-    job_constraints = models.ForeignKey(ConstraintDescription,
-                                        related_name='job_events',
-                                        on_delete=models.CASCADE)
+    volunteer_constraints = models.ManyToManyField(ConstraintDescription,
+                                                   related_name='+',
+                                                   blank=True)
+    job_constraints = models.ManyToManyField(ConstraintDescription,
+                                             related_name='+',
+                                             blank=True)
 
     def __str__(self):
         return self.name
@@ -73,13 +79,31 @@ class Volunteer(models.Model):
     email_address = models.EmailField()
     phone_number = models.CharField(max_length=20)
 
-    public_name = models.CharField(max_length=200)
+    public_name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
 
-    constraints = models.ForeignKey(Constraint, on_delete=models.CASCADE)
+    constraints = models.ManyToManyField(Constraint, related_name='+',
+                                         blank=True)
 
     def __str__(self):
         return '{} ({})'.format(self.real_name, self.public_name)
+
+    def generate_public_name(self):
+        adjective = random.choice(public_name_data.ADJECTIVES)
+        noun = random.choice(public_name_data.BIRDS)
+        return '{} {}'.format(adjective, noun)
+
+    def ensure_has_public_name(self):
+        if not self.public_name:
+            self.public_name = self.generate_public_name()
+            self.slug = slugify(self.public_name)
+
+            # TODO: check this is unique
+
+
+@receiver(signals.pre_save, sender=Volunteer)
+def volunteer_pre_save(sender, instance, **kwargs):
+    instance.ensure_has_public_name()
 
 
 class Job(models.Model):
@@ -88,7 +112,8 @@ class Job(models.Model):
     description = models.ForeignKey(ConstraintDescription,
                                     on_delete=models.CASCADE)
 
-    constraints = models.ForeignKey(Constraint, on_delete=models.CASCADE)
+    constraints = models.ManyToManyField(Constraint, related_name='+',
+                                         blank=True)
 
     def __str__(self):
         return '{} ({})'.format(self.description.name, self.event.name)
