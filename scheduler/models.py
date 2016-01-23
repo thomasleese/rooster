@@ -15,6 +15,9 @@ class ConstraintTemplate(models.Model):
     description = models.TextField()
     data_type = models.CharField(max_length=20, choices=DATA_TYPE_CHOICES)
 
+    def __str__(self):
+        return self.name
+
 
 class Event(models.Model):
     name = models.CharField(max_length=200)
@@ -31,12 +34,18 @@ class Event(models.Model):
                                         related_name='job_events',
                                         on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class Constraint(models.Model):
     template = models.ForeignKey(ConstraintTemplate, on_delete=models.CASCADE)
 
     integer_value = models.IntegerField(null=True)
     boolean_value = models.NullBooleanField()
+
+    def __str__(self):
+        return '{}: {}'.format(self.template.name, self.value)
 
     @property
     def value(self):
@@ -60,6 +69,9 @@ class Volunteer(models.Model):
 
     constraints = models.ForeignKey(Constraint, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return '{} ({})'.format(self.real_name, self.public_name)
+
 
 class Job(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -68,3 +80,6 @@ class Job(models.Model):
     description = models.TextField()
 
     constraints = models.ForeignKey(Constraint, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
