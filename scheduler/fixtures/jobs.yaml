@@ -11,85 +11,80 @@
 - model: scheduler.JobDescription
   pk: 3
   fields:
-    name: Tear Down
+    name: Battery Charging
 
 - model: scheduler.JobDescription
   pk: 4
   fields:
-    name: Battery Charging
+    name: Linesman
 
 - model: scheduler.JobDescription
   pk: 5
   fields:
-    name: Linesman
+    name: Score Entry
 
 - model: scheduler.JobDescription
   pk: 6
   fields:
-    name: Score Entry
+    name: Reception
 
 - model: scheduler.JobDescription
   pk: 7
   fields:
-    name: Reception
+    name: Helpdesk
 
 - model: scheduler.JobDescription
   pk: 8
   fields:
-    name: Helpdesk
+    name: Shepherding
 
 - model: scheduler.JobDescription
   pk: 9
   fields:
-    name: Shepherding
+    name: Kit Handback
 
 - model: scheduler.JobDescription
   pk: 10
   fields:
-    name: Kit Handback
+    name: Tinker Time
 
 - model: scheduler.JobDescription
   pk: 11
   fields:
-    name: Tinker Time
+    name: Commentator
 
 - model: scheduler.JobDescription
   pk: 12
   fields:
-    name: Commentator
+    name: Firefighting
 
 - model: scheduler.JobDescription
   pk: 13
   fields:
-    name: Firefighting
+    name: Score Entry
 
 - model: scheduler.JobDescription
   pk: 14
   fields:
-    name: Score Entry
+    name: Showing to pits
 
 - model: scheduler.JobDescription
   pk: 15
   fields:
-    name: Showing to pits
+    name: Competition Software Operatations
 
 - model: scheduler.JobDescription
   pk: 16
   fields:
-    name: Competition Software Operatations
+    name: Refreshments
 
 - model: scheduler.JobDescription
   pk: 17
   fields:
-    name: Refreshments
-
-- model: scheduler.JobDescription
-  pk: 18
-  fields:
     name: Inspections
 
 - model: scheduler.JobDescription
-  pk: 19
+  pk: 18
   fields:
     name: Judge
 

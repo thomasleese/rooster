@@ -23,6 +23,9 @@ class JobDescription(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Event(models.Model):
     name = models.CharField(max_length=200)
