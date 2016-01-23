@@ -12,7 +12,7 @@ from . import public_name_data
 class Resource(models.Model):
     class Type(Enum):
         integer = 'integer'
-        boolean = 'bool'
+        boolean = 'boolean'
 
     TYPE_CHOICES = ((Type.integer.value, 'Integer'),
                     (Type.boolean.value, 'True/False'))
@@ -41,9 +41,18 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def resources(self):
+        resources = []
+        for job in self.jobs.all():
+            for r in job.resources.all():
+                resources.append(r.resource)
+        return set(resources)
+
 
 class Job(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, related_name='jobs',
+                              on_delete=models.CASCADE)
 
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)

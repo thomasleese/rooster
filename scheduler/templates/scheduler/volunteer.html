@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Volunteer for {{ event.name }}</title>
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" /></script>
+
+    <link href="{% static 'scheduler/theme.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="page">
+      <h1>Volunteer for {{ event.name }}</h1>
+      <p>{{ event.description }}</p>
+
+      <hr />
+
+      <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+          {% if field.is_hidden %}
+            {{ field }}
+          {% else %}
+            <div class="form-group {% if field.errors %}has-danger{% endif %}">
+              {{ field.label_tag }}
+              {{ field }}
+
+              {% if field.errors %}
+                <p class="text-help">{{ field.errors.0 }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+  </body>
+</html>

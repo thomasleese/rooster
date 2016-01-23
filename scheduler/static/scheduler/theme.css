@@ -1,0 +1,14 @@
+body {
+    background: rgb(41, 128, 185);
+}
+
+.page {
+    background: white;
+    box-shadow: 0 0 6rem black;
+    border-radius: 0.1rem;
+
+    padding: 2rem;
+
+    width: 80%;
+    margin: 5rem auto;
+}
