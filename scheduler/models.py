@@ -5,7 +5,7 @@ from django.db import models
 
 class ConstraintDescription(models.Model):
     class DataType(Enum):
-        integer = 'int'
+        integer = 'integer'
         boolean = 'bool'
 
     DATA_TYPE_CHOICES = ((DataType.integer.value, 'Integer'),
