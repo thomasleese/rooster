@@ -9,25 +9,22 @@ from django.utils.text import slugify
 from . import public_name_data
 
 
-class ConstraintDescription(models.Model):
-    class DataType(Enum):
+class Resource(models.Model):
+    class Type(Enum):
         integer = 'integer'
         boolean = 'bool'
 
-    DATA_TYPE_CHOICES = ((DataType.integer.value, 'Integer'),
-                         (DataType.boolean.value, 'True/False'))
+    TYPE_CHOICES = ((Type.integer.value, 'Integer'),
+                    (Type.boolean.value, 'True/False'))
 
     name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    data_type = models.CharField(max_length=20, choices=DATA_TYPE_CHOICES)
-
-    def __str__(self):
-        return self.name
-
-
-class JobDescription(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
+    description = models.TextField()
+    type = models.CharField(max_length=20, choices=TYPE_CHOICES,
+                            default=Type.integer.value)
+    visible = models.BooleanField(default=True)
+    default_value = models.IntegerField(default=0)
+    min_value = models.IntegerField(null=True, blank=True, default=0)
+    max_value = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.name
@@ -38,38 +35,31 @@ class Event(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
 
-    day_length = models.PositiveSmallIntegerField()
-    day_count = models.PositiveSmallIntegerField()
-
-    volunteer_constraints = models.ManyToManyField(ConstraintDescription,
-                                                   related_name='+',
-                                                   blank=True)
-    job_constraints = models.ManyToManyField(ConstraintDescription,
-                                             related_name='+',
-                                             blank=True)
+    slots_per_day = models.PositiveSmallIntegerField()
+    number_of_days = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return self.name
 
 
-class Constraint(models.Model):
-    description = models.ForeignKey(ConstraintDescription,
-                                    on_delete=models.CASCADE)
+class Job(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
-    integer_value = models.IntegerField(null=True)
-    boolean_value = models.NullBooleanField()
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
 
     def __str__(self):
-        return '{}: {}'.format(self.description.name, self.value)
+        return self.name
 
-    @property
-    def value(self):
-        if self.template.data_type == ConstraintDescription.DataType.integer:
-            return self.int_value
-        elif self.template.data_type == ConstraintDescription.DataType.boolean:
-            return self.boolean_value
-        else:
-            raise ValueError('Unknown data type.')
+
+class JobResource(models.Model):
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, related_name='resources',
+                            on_delete=models.CASCADE)
+    value = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return '{} for {}: {}'.format(self.resource, self.job, self.value)
 
 
 class Volunteer(models.Model):
@@ -81,9 +71,6 @@ class Volunteer(models.Model):
 
     public_name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
-
-    constraints = models.ManyToManyField(Constraint, related_name='+',
-                                         blank=True)
 
     def __str__(self):
         return '{} ({})'.format(self.real_name, self.public_name)
@@ -106,14 +93,12 @@ def volunteer_pre_save(sender, instance, **kwargs):
     instance.ensure_has_public_name()
 
 
-class Job(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-
-    description = models.ForeignKey(ConstraintDescription,
-                                    on_delete=models.CASCADE)
-
-    constraints = models.ManyToManyField(Constraint, related_name='+',
-                                         blank=True)
+class VolunteerResource(models.Model):
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+    volunteer = models.ForeignKey(Volunteer, related_name='resources',
+                                  on_delete=models.CASCADE)
+    value = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return '{} ({})'.format(self.description.name, self.event.name)
+        return '{} for {}: {}'.format(self.resource, self.volunteer,
+                                      self.value)

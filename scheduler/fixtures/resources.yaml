@@ -1,0 +1,53 @@
+- model: scheduler.Resource
+  pk: 1
+  fields:
+    name: People
+    description: People available to complete a task.
+    visible: false
+    default_value: 1
+    min_value: 1
+    max_value: 1
+
+- model: scheduler.Resource
+  pk: 2
+  fields:
+    name: Willingness to speak to people?
+    description: How willing you are to speak to people.
+    min_value: 0
+    max_value: 10
+
+- model: scheduler.Resource
+  pk: 3
+  fields:
+    name: How many competitions have you volunteered at to?
+    description: How many competitions you have volunteered at in the past.
+    min_value: 0
+    max_value: 100
+
+- model: scheduler.Resource
+  pk: 4
+  fields:
+    name: Knows how to charge batteries.
+    description: Do you know how to charge batteries?
+    type: boolean
+
+- model: scheduler.Resource
+  pk: 5
+  fields:
+    name: Knows about the kit.
+    description: Do you know about the kit?
+    type: boolean
+
+- model: scheduler.Resource
+  pk: 6
+  fields:
+    name: Knows about the competition software.
+    description: Do you know about the competition software?
+    type: boolean
+
+- model: scheduler.Resource
+  pk: 7
+  fields:
+    name: Willing to/already know the rules?
+    description: Do you already know the rules? Or are you able to know them by the competition?
+    type: boolean
