@@ -11,9 +11,6 @@ jobs:
   "Linesman":
     description:
     constraints:
-  "Score Entry":
-    description:
-    constraints:
   "Reception":
     description:
     constraints:
@@ -35,6 +32,7 @@ jobs:
   "Firefighting":
     description:
     constraints:
+      - Have many year experience
   "Score Entry":
     description:
     constraints:
@@ -44,16 +42,20 @@ jobs:
   "Competition Software Operatations":
     description:
     constraints:
+      - Be Peter
   "Refreshments":
     description:
     constraints: 
   "Inspections":
     description:
     constraints:
+      - *Know* the rules
   "Judge":
     description:
     constraints:
-
+      - Know the rules
+      - Been to 6 competitions
+      - Probably be Sam
 job-constraints:
   "required workers":
     description: "Number of required workers"

@@ -1,4 +1,4 @@
-# Boolean Satisfaction Layout
+# Constraint Satisfaction Layout
 
 * At each time interval, all jobs must be filled, unless otherwise specified.
 * Jobs cannot be assigned to those not qualified for them.
@@ -12,3 +12,4 @@
 * Intervals per day
 * Max intervals without break (can be infinity)
 
+Constraint library at http://www.labix.org/python-constraint
