@@ -21,7 +21,6 @@ class ConstraintDescription(models.Model):
 
 class JobDescription(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
 
 
