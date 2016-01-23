@@ -1,0 +1,2 @@
+# rooster
+An event scheduler.
