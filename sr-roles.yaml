@@ -1,0 +1,39 @@
+roles:
+  "Master of Ceremonies":
+    []
+  "Tear Down":
+    []
+  "Battery Charging":
+    []
+  "Linesman":
+    []
+  "Score Entry":
+    []
+  "Reception":
+    []
+  "Helpdesk":
+    []
+  "Shepherding":
+    []
+  "Kit Handback":
+    []
+  "Tinker Time":
+    []
+  "Commentator":
+    []
+  "Firefighting":
+    []
+  "Score Entry":
+    []
+  "Showing to pits":
+    []
+  "Competition Software Operatations":
+    []
+  "Refreshments":
+    []
+  "Inspections":
+    []
+  "Judge":
+    []
+person-constraints:
+  - "Constraints here"
