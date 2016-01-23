@@ -1,10 +1,16 @@
 from django.contrib import admin
 
-from .models import ConstraintTemplate, Constraint, Event, Volunteer, Job
+from .models import ConstraintDescription, JobDescription, Event, Volunteer, \
+    Job
 
 
-@admin.register(ConstraintTemplate)
-class ConstraintTemplateAdmin(admin.ModelAdmin):
+@admin.register(ConstraintDescription)
+class ConstraintDescriptionAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(JobDescription)
+class JobDescriptionAdmin(admin.ModelAdmin):
     pass
 
 
