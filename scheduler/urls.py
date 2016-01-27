@@ -4,5 +4,5 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^(?P<slug>[\w-]+)$', views.volunteer, name='volunteer'),
+    url(r'^(?P<slug>[\w-]+)$', views.sign_up, name='register'),
 ]

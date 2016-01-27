@@ -3,7 +3,7 @@ from django import forms
 from .models import Resource, Volunteer
 
 
-class VolunteerForm(forms.ModelForm):
+class SignUpForm(forms.ModelForm):
     class Meta:
         model = Volunteer
         fields = ('real_name', 'email_address', 'phone_number')

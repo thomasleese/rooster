@@ -1,15 +1,15 @@
 from django.shortcuts import get_object_or_404, render
 
-from .forms import VolunteerForm
+from .forms import SignUpForm
 from .models import Event, VolunteerResource
 
 
-def volunteer(request, slug):
+def sign_up(request, slug):
     event = get_object_or_404(Event, slug=slug)
 
     resources = event.resources
 
-    form = VolunteerForm(request.POST or None, resources=resources)
+    form = SignUpForm(request.POST or None, resources=resources)
 
     if form.is_valid():
         volunteer = form.save(commit=False)
