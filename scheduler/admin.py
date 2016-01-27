@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Resource, Event, Job, JobResource, Volunteer, \
-    VolunteerResource
+    VolunteerResource, ManualScheduleEntry
 
 
 @admin.register(Resource)
@@ -38,3 +38,9 @@ class VolunteerAdmin(admin.ModelAdmin):
               'public_name', 'slug')
     readonly_fields = ('public_name', 'slug')
     inlines = (VolunteerResourceInline,)
+
+
+@admin.register(ManualScheduleEntry)
+class ManualScheduleEntryAdmin(admin.ModelAdmin):
+    list_display = ('event', 'job', 'volunteer', 'day', 'time_slot')
+    list_filter = ('event',)
