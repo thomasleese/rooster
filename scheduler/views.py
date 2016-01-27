@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 from .forms import SignUpForm
 from .models import Event, VolunteerResource
@@ -24,6 +24,15 @@ def sign_up(request, slug):
 
         volunteer.save()
         form.save_m2m()
+        return redirect('sign_up_success',slug)
+    else:
+        context = {'form': form, 'event': event}
+        return render(request, 'scheduler/sign_up.html', context)
 
-    context = {'form': form, 'event': event}
-    return render(request, 'scheduler/volunteer.html', context)
+def sign_up_success(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+
+    resources = event.resources
+
+    context = {'event': event}
+    return render(request, 'scheduler/sign_up_success.html', context)

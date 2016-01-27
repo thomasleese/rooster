@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models import signals
 from django.dispatch import receiver
 from django.utils.text import slugify
+from django.core.urlresolvers import reverse
 
 from . import public_name_data
 
@@ -37,6 +38,9 @@ class Event(models.Model):
 
     slots_per_day = models.PositiveSmallIntegerField()
     number_of_days = models.PositiveSmallIntegerField()
+
+    def get_absolute_url(self):
+        return reverse('sign_up', args=[str(self.slug)])
 
     def __str__(self):
         return self.name
