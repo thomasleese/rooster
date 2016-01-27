@@ -9,15 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1200"
-   height="300"
-   viewBox="0 0 1200 300"
+   width="800"
+   height="260"
+   viewBox="0 0 800 260"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
    inkscape:export-filename="/Users/ThomasLeese/Documents/SR/rooster/rooster/static/images/logo.png"
-   inkscape:export-xdpi="180"
-   inkscape:export-ydpi="180"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
    sodipodi:docname="logo.svg">
   <defs
      id="defs4" />
@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7071068"
-     inkscape:cx="544.4608"
-     inkscape:cy="110.9702"
+     inkscape:cx="487.89226"
+     inkscape:cy="54.401661"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -56,10 +56,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-752.36213)">
+     transform="translate(0,-792.36213)">
     <g
        id="Dibujo"
-       transform="matrix(2.884574,0,0,2.8845752,-25.176294,760.88943)">
+       transform="matrix(2.884574,0,0,2.8845752,-25.176294,790.88943)">
       <g
          id="g4173">
         <path
@@ -78,7 +78,7 @@
        xml:space="preserve"
        id="flowRoot4189"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(5.3081283,0,0,5.3081283,-1551.5426,-1378.9423)"><flowRegion
+       transform="matrix(5.3081283,0,0,5.3081283,-1551.5426,-1348.9423)"><flowRegion
          id="flowRegion4191"><rect
            id="rect4193"
            width="436"
@@ -90,7 +90,7 @@
        xml:space="preserve"
        id="flowRoot4197"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(2.1234498,0,0,2.1234498,-97.14669,734.98625)"><flowRegion
+       transform="matrix(2.1234498,0,0,2.1234498,-97.14669,764.98625)"><flowRegion
          id="flowRegion4199"><rect
            id="rect4201"
            width="372.64526"
