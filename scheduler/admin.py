@@ -1,7 +1,8 @@
+from django import forms
 from django.contrib import admin
 
 from .models import Resource, Event, Job, JobResource, Volunteer, \
-    VolunteerResource, ManualScheduleEntry
+    VolunteerResource, ScheduleEntry
 
 
 @admin.register(Resource)
@@ -40,7 +41,20 @@ class VolunteerAdmin(admin.ModelAdmin):
     inlines = (VolunteerResourceInline,)
 
 
-@admin.register(ManualScheduleEntry)
+class ManualScheduleEntryAdminForm(forms.ModelForm):
+    class Meta:
+        model = ScheduleEntry
+        exclude = ['manual']
+
+    def save(self, *args, **kwargs):
+        self.instance.manual = 1 # jobs allocated by an admin are marked as 
+                                 # manually allocated.
+        return super(ManualScheduleEntryAdminForm, self).save(*args, **kwargs)
+
+@admin.register(ScheduleEntry)
 class ManualScheduleEntryAdmin(admin.ModelAdmin):
-    list_display = ('event', 'job', 'volunteer', 'day', 'time_slot')
+    form = ManualScheduleEntryAdminForm
+    list_display = ('event', 'job', 'volunteer', 'day', 'time_slot', 'manual')
     list_filter = ('event',)
+
+

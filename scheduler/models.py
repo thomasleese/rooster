@@ -73,7 +73,7 @@ class JobResource(models.Model):
     target_value = models.IntegerField()
 
     def __str__(self):
-        return '{} for {}: {}'.format(self.resource, self.job, self.value)
+        return '{} for {}: min={}; target={}'.format(self.resource, self.job, self.min_value, self.target_value)
 
 
 class Volunteer(models.Model):
@@ -117,8 +117,7 @@ class VolunteerResource(models.Model):
         return '{} for {}: {}'.format(self.resource, self.volunteer,
                                       self.value)
 
-
-class ManualScheduleEntry(models.Model):
+class ScheduleEntry(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     job = models.ForeignKey(Job, related_name='+', on_delete=models.CASCADE)
@@ -126,3 +125,4 @@ class ManualScheduleEntry(models.Model):
                                   on_delete=models.CASCADE)
     day = models.IntegerField()
     time_slot = models.IntegerField()
+    manual = models.IntegerField(default=0)

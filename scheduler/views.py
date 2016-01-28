@@ -1,8 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .forms import SignUpForm
-from .models import Event, VolunteerResource
-
+from .models import Event, VolunteerResource, Volunteer, ScheduleEntry
 
 def sign_up(request, slug):
     event = get_object_or_404(Event, slug=slug)
@@ -36,3 +35,24 @@ def sign_up_success(request, slug):
 
     context = {'event': event}
     return render(request, 'scheduler/sign_up_success.html', context)
+
+def volunteer_timetable(request, eventslug, volunteerslug):
+    event = get_object_or_404(Event, slug=eventslug)
+    volunteer = get_object_or_404(Volunteer, slug=volunteerslug)
+
+    jobs_list = list(ScheduleEntry.objects.filter(event=event, volunteer=volunteer).order_by('time_slot', 'day'))
+    if not jobs_list:
+        raise Http404("No ScheduleEntry matches the given query.")
+
+    number_of_days = event.number_of_days
+    slots_per_day = event.slots_per_day
+
+    allocations = [[0 for x in range(number_of_days)] for x in range(slots_per_day)]
+    for allocation in jobs_list:
+        allocations[allocation.time_slot-1][allocation.day-1]=allocation
+
+    context = {'event': event, 'volunteer': volunteer, 
+        'number_of_days': range(1, number_of_days+1), 
+        'slots_per_day': range(1, slots_per_day+1),
+        'allocations': allocations}
+    return render(request, 'scheduler/volunteer_timetable.html', context)

@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>{{ volunteer.real_name }}'s timetable for {{ event.name }}</title>
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" /></script>
+
+    <link href="{% static 'scheduler/theme.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="page">
+      <h1>{{ volunteer.real_name }}'s timetable for {{ event.name }}</h1>
+      <p>{{ event.description }}</p>
+
+      <hr />
+
+      <table class="table-bordered" id="timetable">
+        <tr>
+          <th></th>
+          {% for day in number_of_days %}
+            <th>Day {{ day }}</th>
+          {% endfor %}
+        </tr>
+        {% for allocation in allocations %}
+          <tr>
+            <th>Slot {{ forloop.counter }}</th>
+            <td>
+              {% if allocation.0 %}
+                {{ allocation.0.job.name }}
+                {% if allocation.0.manual %}
+                  <span class="manualtext" title="This task was assigned to you manually.">M</span>
+                {% endif %}
+              {% else %}
+                <em>- FREE -</em>
+              {% endif %}
+            </td>
+            <td>
+              {% if allocation.1 %}
+                {{ allocation.1.job.name }}
+                {% if allocation.1.manual %}
+                  <span class="manualtext" title="This task was assigned to you manually.">M</span>
+                {% endif %}
+              {% else %}
+                <em>- FREE -</em>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+
+  </body>
+</html>

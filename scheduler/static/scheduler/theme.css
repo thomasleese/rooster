@@ -12,3 +12,17 @@ body {
     width: 80%;
     margin: 5rem auto;
 }
+
+#timetable{
+	width:100%;
+}
+#timetable th{
+	text-align: center;
+}
+
+.manualtext{
+	vertical-align:super;
+	font-size: smaller;
+	font-weight: bold;
+	color:#A349A4;
+}
