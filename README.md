@@ -2,9 +2,18 @@
 
 An event scheduler.
 
-## Running
+## Setup 
 
     $ pyvenv venv
     $ source venv/bin/activate
     $ pip install -r requirements.txt
+    $ python manage.py migrate
+
+## Running
+
+    $ source venv/bin/activate
     $ python manage.py runserver
+
+## When done
+
+    $ deactivate
