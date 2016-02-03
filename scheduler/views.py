@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.http import Http404
 
 from .forms import SignUpForm
 from .models import Event, VolunteerResource, Volunteer, ScheduleEntry
@@ -37,12 +38,22 @@ def sign_up_success(request, slug):
     return render(request, 'scheduler/sign_up_success.html', context)
 
 def volunteer_timetable(request, eventslug, volunteerslug):
-    event = get_object_or_404(Event, slug=eventslug)
-    volunteer = get_object_or_404(Volunteer, slug=volunteerslug)
+    event = 0
+    try:
+        event = Event.objects.get(slug=eventslug)
+    except Event.DoesNotExist:
+        return volunteer_timetable_notfound(request, eventslug, volunteerslug)
+
+    volunteer = 0
+    try:
+        volunteer = Volunteer.objects.get(slug=volunteerslug)
+    except Volunteer.DoesNotExist:
+        return volunteer_timetable_notfound(request, eventslug, volunteerslug)
+
+    if volunteer.event != event:
+        return volunteer_timetable_notfound(request, eventslug, volunteerslug)
 
     jobs_list = list(ScheduleEntry.objects.filter(event=event, volunteer=volunteer).order_by('time_slot', 'day'))
-    if not jobs_list:
-        raise Http404("No ScheduleEntry matches the given query.")
 
     number_of_days = event.number_of_days
     slots_per_day = event.slots_per_day
@@ -56,3 +67,6 @@ def volunteer_timetable(request, eventslug, volunteerslug):
         'slots_per_day': range(1, slots_per_day+1),
         'allocations': allocations}
     return render(request, 'scheduler/volunteer_timetable.html', context)
+
+def volunteer_timetable_notfound(request, eventslug, volunteerslug):
+    return render(request, 'scheduler/timetable_not_found.html', {'event':eventslug, 'volunteer':volunteerslug})
