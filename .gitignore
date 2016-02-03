@@ -66,4 +66,3 @@ target/
 /db.sqlite3
 /venv
 static_files/*
-scheduler/migrations/*
