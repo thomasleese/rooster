@@ -65,4 +65,3 @@ target/
 # App
 /db.sqlite3
 /venv
-static_files/*
