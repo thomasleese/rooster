@@ -73,7 +73,9 @@ class JobResource(models.Model):
     target_value = models.IntegerField()
 
     def __str__(self):
-        return '{} for {}: min={}; target={}'.format(self.resource, self.job, self.min_value, self.target_value)
+        return '{} for {}: min={}; target={}'.format(self.resource, self.job,
+                                                     self.min_value,
+                                                     self.target_value)
 
 
 class Volunteer(models.Model):

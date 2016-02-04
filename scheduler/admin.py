@@ -47,14 +47,13 @@ class ManualScheduleEntryAdminForm(forms.ModelForm):
         exclude = ['manual']
 
     def save(self, *args, **kwargs):
-        self.instance.manual = 1 # jobs allocated by an admin are marked as 
-                                 # manually allocated.
-        return super(ManualScheduleEntryAdminForm, self).save(*args, **kwargs)
+        # Jobs allocated by an admin are marked as manually allocated.
+        self.instance.manual = True
+        return super().save(*args, **kwargs)
+
 
 @admin.register(ScheduleEntry)
 class ManualScheduleEntryAdmin(admin.ModelAdmin):
     form = ManualScheduleEntryAdminForm
     list_display = ('event', 'job', 'volunteer', 'day', 'time_slot', 'manual')
     list_filter = ('event',)
-
-
