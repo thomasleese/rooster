@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Not found{% endblock %}
+
+{% block content %}
+  <h1>Not Found</h1>
+  <p class="lead">Unfortunately the page you are looking for could not be found.</p>
+
+  <p><pre><code>{{ exception }}</code></pre></p>
+
+  <button class="btn" onclick="window.history.back();">Go back</button>
+{% endblock %}

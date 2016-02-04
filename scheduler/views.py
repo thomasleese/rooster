@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .forms import SignUpForm
@@ -37,19 +38,12 @@ def sign_up_success(request, slug):
     return render(request, 'scheduler/sign_up_success.html', context)
 
 
-def volunteer_timetable(request, eventslug, volunteerslug):
-    try:
-        event = Event.objects.get(slug=eventslug)
-    except Event.DoesNotExist:
-        return volunteer_timetable_notfound(request, eventslug, volunteerslug)
-
-    try:
-        volunteer = Volunteer.objects.get(slug=volunteerslug)
-    except Volunteer.DoesNotExist:
-        return volunteer_timetable_notfound(request, eventslug, volunteerslug)
+def volunteer_timetable(request, event_slug, volunteer_slug):
+    event = get_object_or_404(Event, slug=event_slug)
+    volunteer = get_object_or_404(Volunteer, slug=volunteer_slug)
 
     if volunteer.event != event:
-        return volunteer_timetable_notfound(request, eventslug, volunteerslug)
+        raise Http404('There is no volunteer for this event.')
 
     jobs_list = ScheduleEntry.objects \
         .filter(event=event, volunteer=volunteer) \
@@ -65,14 +59,9 @@ def volunteer_timetable(request, eventslug, volunteerslug):
     context = {
         'event': event,
         'volunteer': volunteer,
-        'number_of_days': range(1, number_of_days+1),
-        'slots_per_day': range(1, slots_per_day+1),
+        'number_of_days': range(1, number_of_days + 1),
+        'slots_per_day': range(1, slots_per_day + 1),
         'allocations': allocations
     }
 
     return render(request, 'scheduler/volunteer_timetable.html', context)
-
-
-def volunteer_timetable_notfound(request, eventslug, volunteerslug):
-    context = {'event': eventslug, 'volunteer': volunteerslug}
-    return render(request, 'scheduler/timetable_not_found.html', context)
