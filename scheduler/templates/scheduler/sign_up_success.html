@@ -1,32 +1,12 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-  <head>
-    <meta charset="UTF-8" />
+{% block title %}Registration complete!{% endblock %}
 
-    <title>Registration complete!</title>
+{% block content %}
+  <h1>Success!</h1>
+  <p>You have successfully signed up to volunteer for {{ event.name }}!</p>
 
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
-    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" /></script>
+  <p>When the timetables have been finalised, you will be emailed with a link to your timetable.</p>
 
-
-    <link href="{% static 'scheduler/theme.css' %}" rel="stylesheet" />
-
-  </head>
-
-  <body>
-    <div class="page">
-      <h1>Success!</h1>
-      <p>You have successfully signed up to volunteer for {{ event.name }}!</p>
-
-      <p>When the timetables have been finalised, you will be emailed with a link to your timetable.</p>
-
-      <p>You may now close this window.</p>
-
-      </script>
-
-    </div>
-
-  </body>
-</html>
+  <p>You may now close this window.</p>
+{% endblock %}
