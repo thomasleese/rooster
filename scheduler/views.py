@@ -45,9 +45,8 @@ def volunteer_timetable(request, event_slug, volunteer_slug):
     if volunteer.event != event:
         raise Http404('There is no volunteer for this event.')
 
-    jobs_list = ScheduleEntry.objects \
-        .filter(event=event, volunteer=volunteer) \
-        .order_by('time_slot', 'day')
+    jobs_list = event.schedule.for_volunteer(volunteer) \
+        .with_allocation_ordering()
 
     number_of_days = event.number_of_days
     slots_per_day = event.slots_per_day

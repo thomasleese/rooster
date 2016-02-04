@@ -119,8 +119,21 @@ class VolunteerResource(models.Model):
         return '{} for {}: {}'.format(self.resource, self.volunteer,
                                       self.value)
 
+
+class ScheduleEntryQuerySet(models.QuerySet):
+    def for_event(self, event):
+        return self.filter(event=event)
+
+    def for_volunteer(self, volunteer):
+        return self.filter(volunteer=volunteer)
+
+    def with_allocation_ordering(self):
+        return self.order_by('time_slot', 'day')
+
+
 class ScheduleEntry(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, related_name='schedule',
+                              on_delete=models.CASCADE)
 
     job = models.ForeignKey(Job, related_name='+', on_delete=models.CASCADE)
     volunteer = models.ForeignKey(Volunteer, related_name='+',
@@ -128,3 +141,5 @@ class ScheduleEntry(models.Model):
     day = models.IntegerField()
     time_slot = models.IntegerField()
     manual = models.IntegerField(default=0)
+
+    entries = ScheduleEntryQuerySet.as_manager()
