@@ -56,6 +56,10 @@ jobs:
       - Know the rules
       - Been to 6 competitions
       - Probably be Sam
+  "Feedback Collection:
+    description:
+    constraints:
+
 job-constraints:
   "required workers":
     description: "Number of required workers"
