@@ -1,7 +1,7 @@
 jobs:
   "Master of Ceremonies":
     description:
-    constraints: 
+    constraints:
   "Tear Down":
     description:
     constraints:
@@ -45,7 +45,7 @@ jobs:
       - Be Peter
   "Refreshments":
     description:
-    constraints: 
+    constraints:
   "Inspections":
     description:
     constraints:
@@ -57,6 +57,9 @@ jobs:
       - Been to 6 competitions
       - Probably be Sam
   "Feedback Collection:
+    description:
+    constraints:
+  "Social Media":
     description:
     constraints:
 
