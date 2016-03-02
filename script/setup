@@ -15,6 +15,7 @@ script/bootstrap
 
 progress "Setting up DB…"
 
+venv/bin/python manage.py migrate
 venv/bin/python manage.py loaddata resources
 
 progress "App is now ready to go!"
