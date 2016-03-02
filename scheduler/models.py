@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 
 from . import public_name_data
 
+from datetime import datetime
 
 class Resource(models.Model):
     class Type(Enum):
@@ -35,6 +36,8 @@ class Event(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(blank=True)
+
+    start_date = models.DateField(default=datetime.now())
 
     slots_per_day = models.PositiveSmallIntegerField()
     number_of_days = models.PositiveSmallIntegerField()
@@ -77,13 +80,15 @@ class JobResource(models.Model):
                                                      self.min_value,
                                                      self.target_value)
 
-
 class Volunteer(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     real_name = models.CharField(max_length=200)
     email_address = models.EmailField()
     phone_number = models.CharField(max_length=20)
+
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
     public_name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
@@ -100,8 +105,11 @@ class Volunteer(models.Model):
         if not self.public_name:
             self.public_name = self.generate_public_name()
             self.slug = slugify(self.public_name)
-
             # TODO: check this is unique
+    
+    def save(self):
+        
+        super().save()
 
 
 @receiver(signals.pre_save, sender=Volunteer)

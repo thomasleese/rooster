@@ -14,7 +14,8 @@ class ResourceAdmin(admin.ModelAdmin):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
-    list_display = ('name', 'slots_per_day', 'number_of_days')
+    list_display = ('name', 'start_date', 'number_of_days', 'slots_per_day')
+    #list_display = ('name', 'slots_per_day', 'number_of_days')
 
 
 class JobResourceInline(admin.TabularInline):
@@ -33,10 +34,11 @@ class VolunteerResourceInline(admin.TabularInline):
 
 @admin.register(Volunteer)
 class VolunteerAdmin(admin.ModelAdmin):
-    list_display = ('real_name', 'public_name', 'event')
+    list_display = ('real_name', 'public_name', 'event', 'start_date',
+                    'end_date')
     list_filter = ('event',)
     fields = ('event', 'real_name', 'email_address', 'phone_number',
-              'public_name', 'slug')
+              'start_date', 'end_date', 'public_name', 'slug') 
     readonly_fields = ('public_name', 'slug')
     inlines = (VolunteerResourceInline,)
 

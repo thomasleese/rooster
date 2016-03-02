@@ -2,11 +2,24 @@ from django import forms
 
 from .models import Resource, Volunteer
 
+from datetime import datetime, timedelta
 
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = Volunteer
-        fields = ('real_name', 'email_address', 'phone_number')
+        fields = ('real_name', 'email_address', 'phone_number', 'start_date',
+                  'end_date')
+        widgets = {
+            'start_date': forms.DateField(
+                input_formats=['%d/%m/%Y'], 
+                initial=datetime.now()
+            ),
+            'end_date': forms.DateField(
+                input_formats=['%d/%m/%Y'],
+                initial=(datetime.now() +
+                         timedelta(days=3))
+            )
+        }
         labels = {'real_name': 'Full Name'}
 
     def __init__(self, *args, **kwargs):
