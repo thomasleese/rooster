@@ -3,11 +3,10 @@ from constraint import *
 
 class Schedule(object):
 
-    jobs = []
-    people = []
-    schedule_exists = False
-
     def __init__(self, name="", allowed_job_constraints=[], allowed_people_constraints=[], days=2, day_length=4, max_continuous_intervals=-1):
+        self.jobs = []
+        self.people = []
+        self.schedule_exists = False
         self.name = name
         self.allowed_job_constraints = allowed_job_constraints
         self.allowed_people_constraints = allowed_people_constraints
