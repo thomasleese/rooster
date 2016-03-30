@@ -13,6 +13,11 @@ cd "$(dirname "$0")/.."
 
 progress "Installing Python dependencies…"
 
+# Warn the user about the dodgy py3-ortools package
+echo "!! You may need to manually install ortools  !!"
+echo "!! ortools is available here:                !!"
+echo "!! https://pypi.python.org/pypi/py3-ortools/ !!"
+
 if [ ! -d "venv" ]; then
     for pyvenv in pyvenv pyvenv-3.5 pyvenv-3.4; do
         if hash $pyvenv 2>/dev/null; then
