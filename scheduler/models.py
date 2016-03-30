@@ -103,6 +103,26 @@ class Volunteer(models.Model):
 
             # TODO: check this is unique
 
+    def can_do_job(self, job: Job):
+        resource_minimums = {}
+
+        for jr in JobResource.objects.filter(job=job):
+            resource_minimums[jr.resource] = jr.min_value
+
+        for vr in VolunteerResource.objects.filter(volunteer=self):
+            resource = vr.resource
+            if resource in resource_minimums:
+                # Check the volunteer resource is higher than the minimum
+                if vr.value < resource_minimums[resource]:
+                    return False
+                del resource_minimums[resource]
+
+        # The volunteer is missing a resource needed for the job.
+        if len(resource_minimums) > 0:
+            return False
+        else:
+            return True
+
 
 @receiver(signals.pre_save, sender=Volunteer)
 def volunteer_pre_save(sender, instance, **kwargs):
