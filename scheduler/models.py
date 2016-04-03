@@ -66,19 +66,33 @@ class Job(models.Model):
 
 
 class JobResource(models.Model):
+    """
+    A resource requirement which each participant must satisfy to get in.
+    """
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, related_name='resources',
                             on_delete=models.CASCADE)
 
-    per_volunteer = models.BooleanField(default=True)
     min_value = models.IntegerField()
     target_value = models.IntegerField()
 
     def __str__(self):
-        return '{} for {}: per_volunteer={}; min={}; target={}'.format(self.resource, self.job,
-                                                                       self.per_volunteer,
-                                                                       self.min_value,
-                                                                       self.target_value)
+        return '{} for {}: min={}; target={}'.format(self.resource, self.job,
+                                                     self.min_value,
+                                                     self.target_value)
+
+
+class JobSumResource(JobResource):
+    """
+    A resource requirement where the values for each participant are added together.
+    """
+
+    # Functionally the same as a JobResource, (it is treated differently though)
+
+    def __str__(self):
+        return 'Sum of {} for {}: min={}; target={}'.format(self.resource, self.job,
+                                                            self.min_value,
+                                                            self.target_value)
 
 
 class Volunteer(models.Model):
@@ -107,6 +121,11 @@ class Volunteer(models.Model):
             # TODO: check this is unique
 
     def can_do_job(self, job: Job):
+        """
+        Check if the user will be allowed to do the job
+        :param job: the job to check against
+        :return: if the user has the resources to do the job
+        """
         resource_minimums = {}
 
         for jr in JobResource.objects.filter(job=job):
